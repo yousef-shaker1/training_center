@@ -14,7 +14,7 @@ class Comments extends Component
     public $comment;
     public function render()
     {
-        $comments = Comment_Blog::paginate(5);
+        $comments = Comment_Blog::where('blog_id', $this->id)->paginate(5);
         return view('livewire.comments', compact('comments'));
     }
 

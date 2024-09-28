@@ -6,7 +6,7 @@ comments
 @endsection
 
 @section('content')
-@livewire('comments')
+@livewire('comments', ['id' => $id])
 
 
     </div>

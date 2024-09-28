@@ -41,8 +41,7 @@ class AdminPageController extends Controller
     }
     
     public function show_comment($id){
-        $comments = Comment_Blog::where('blog_id', $id)->get();
-        return view('admin.show_comment', compact('comments'));
+        return view('admin.show_comment', compact('id'));
     }
     
     public function payment_page(){

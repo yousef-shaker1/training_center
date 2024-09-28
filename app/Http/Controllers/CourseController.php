@@ -124,7 +124,7 @@ class CourseController extends Controller
     public function poststripe($id){
         $course = Course::findorfail($id);
         $pay = payment::where('course_id', $id)->count();
-        if($pay > $course->Quantity){
+    if($pay < $course->Quantity){
 
             Stripe::setApiKey(config('services.stripe.secret'));
             
