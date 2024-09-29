@@ -5,10 +5,11 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasRoles;
 
@@ -48,4 +49,13 @@ class User extends Authenticatable
             'roles_name' => 'array',
         ];
     }
+
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+    
+    public function getJWTCustomClaims(){
+        return [];
+    }
+
 }
