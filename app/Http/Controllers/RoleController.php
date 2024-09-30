@@ -18,15 +18,15 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public static function middleware():array
+    public function __construct()
     {
-        return [
-            new Middleware('permission:role', ['only' => ['index']]),
-            new Middleware('permission:create_role', ['only' => ['create','store']]),
-            new Middleware('permission:edit_role', ['only' => ['edit','update']]),
-            new Middleware('permission:delete_role', ['only' => ['destroy']]),
-        ];
+        $this->middleware('permission:role')->only(['index']);
+        $this->middleware('permission:create_role')->only(['create', 'store']);
+        $this->middleware('permission:edit_role')->only(['edit', 'update']);
+        $this->middleware('permission:show_role')->only(['show']);
+        $this->middleware('permission:delete_role')->only(['destroy']);
     }
+
     /**
      * Display a listing of the resource.
      *

@@ -8,4 +8,5 @@
         <span class="align-middle me-2"><i class="fa fa-heart"></i></span> {{ $count_love }}
         people like this
     </p>
-</div>
+
+</div> 

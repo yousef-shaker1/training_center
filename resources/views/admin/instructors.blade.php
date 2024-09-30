@@ -217,12 +217,14 @@ instructors
                         </div>
                         
                         <div class="form-group">
-                            <label for="section_id">القسم</label>
-                            <select name="section_id" id="section_id" class="form-control" required>
-                                @foreach ($sections as $section)
-                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
-                                @endforeach
-                            </select>
+                                <label for="section_id">القسم</label>
+                                <select name="section_id" id="section_id" class="form-control" required>
+                                    @foreach ($sections as $section)
+                                        <option value="{{ $section->id }}"  {{ $section->id == $instructor->section_id ? 'selected' : '' }}>{{ $section->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('section_id')<div class="text-danger">{{ $message }}</div>@enderror
+                            
                             @error('section_id')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <label for="current_img" class="col-form-label">الصورة الحالية للقسم:</label>
@@ -284,8 +286,6 @@ instructors
 
 @endsection
 @section('js')
-{{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> --}}
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
    <script>
     $(document).on('click', '.modal-effect', function() {
@@ -301,25 +301,26 @@ instructors
     $('#exampleModal2 #description').val(description);
     $('#exampleModal2 #year_experience').val(year_experience);
     $('#exampleModal2 #section_id').val(section_id);
-    $('#current_img').attr('src', img); // إذا كنت تريد عرض الصورة الحالية في الموديل
+    
+    $('#current_img').attr('src', img); 
     if (img) {
-        var imgUrl = '{{ Storage::url('') }}' + img; // تأكد من إضافة المسار المناسب
+        var imgUrl = '{{ Storage::url('') }}' + img; 
         $('#current_img').attr('src', imgUrl);
-        $('#current_img_link').attr('href', imgUrl); // تعيين رابط الصورة
+        $('#current_img_link').attr('href', imgUrl); 
     } else {
-        $('#current_img').attr('src', 'default-image.jpg'); // صورة افتراضية
-        $('#current_img_link').attr('href', '#'); // لا رابط إذا لم يكن هناك صورة
+        $('#current_img').attr('src', 'default-image.jpg');
+        $('#current_img_link').attr('href', '#'); 
     }
 });
 
 $(document).ready(function() {
     $('#modaldemo9').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget); // الحصول على الزر الذي أطلق الحدث
-        var id = button.data('id'); // استخراج البيانات من سمات الزر
+        var button = $(event.relatedTarget);
+        var id = button.data('id'); 
         var name = button.data('name');
         var modal = $(this);
-        modal.find('.modal-body #id').val(id); // تعيين القيمة لحقل id
-        modal.find('.modal-body #name').val(name); // تعيين القيمة لحقل name
+        modal.find('.modal-body #id').val(id);
+        modal.find('.modal-body #name').val(name); 
     });
 });
 

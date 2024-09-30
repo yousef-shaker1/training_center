@@ -7,8 +7,6 @@ comments
 
 @section('content')
 @livewire('comments', ['id' => $id])
-
-
     </div>
 
   </div>

@@ -7,14 +7,7 @@ payments
 
 @section('css')
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<style>
-    /* table {
-    width: auto; 
-}
 
-.table td, .table th */
-
-</style>
 @endsection
 
 @section('content')
@@ -24,19 +17,19 @@ payments
           <strong>{{ session()->get('delete') }}</strong>
       </div>
   @endif
-  <div class="container-fluid p-2"> <!-- تقليل الـ padding -->
+  <div class="container-fluid p-2"> 
     <div class="row">
         <div class="col-xl-12">
-            <div class="card mb-3"> <!-- تقليل المسافة السفلية -->
-              
-                <div class="card-body p-2"> <!-- تقليل padding -->
+            <div class="card mb-3"> 
+                <div class="card-body p-2"> 
                     <div class="table-responsive">
-                        <table id="example1" class="table table-hover text-center table-sm"> <!-- استخدام class table-sm لتصغير الجدول -->
+                        <table id="example1" class="table table-hover text-center table-sm"> 
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
                                     <th>name user</th>
                                     <th>course</th>
+                                    <th>price</th>
                                     <th>time</th>
                                     <th>Operations</th>
                                 </tr>
@@ -48,6 +41,7 @@ payments
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $payment->user->name }}</td>
                                         <td>{{ $payment->course->name }}</td>
+                                        <td>{{ $payment->course->price }}$</td>
                                         <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('h:i A - d-m-Y') }}</td>
                                         <td>
                                         @can('delete_payment')
@@ -131,22 +125,20 @@ payments
 
 @endsection
 @section('js')
-{{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> --}}
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
    <script>
 
 
 $(document).ready(function() {
     $('#modaldemo9').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget); // الحصول على الزر الذي أطلق الحدث
-        var id = button.data('id'); // استخراج البيانات من سمات الزر
+        var button = $(event.relatedTarget);
+        var id = button.data('id'); 
         var user = button.data('user');
         var course = button.data('course');
         var modal = $(this);
-        modal.find('.modal-body #id').val(id); // تعيين القيمة لحقل id
-        modal.find('.modal-body #user').val(user); // تعيين القيمة لحقل name
-        modal.find('.modal-body #course').val(course); // تعيين القيمة لحقل name
+        modal.find('.modal-body #id').val(id);
+        modal.find('.modal-body #user').val(user); 
+        modal.find('.modal-body #course').val(course);
     });
 });
 

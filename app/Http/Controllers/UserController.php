@@ -15,16 +15,13 @@ use Illuminate\Foundation\Configuration\Middleware;
     
 class UserController extends Controller
 {
-
-    public static function middleware():array
+    public function __construct()
     {
-        return [
-            new Middleware('permission:user', ['only' => ['index']]),
-            new Middleware('permission:create_user', ['only' => ['create','store']]),
-            new Middleware('permission:edit_user', ['only' => ['edit','update']]),
-            new Middleware('permission:show_user', ['only' => ['show']]),
-            new Middleware('permission:delete_user', ['only' => ['destroy']]),
-        ];
+        $this->middleware('permission:user')->only(['index']);
+        $this->middleware('permission:create_user')->only(['create', 'store']);
+        $this->middleware('permission:edit_user')->only(['edit', 'update']);
+        $this->middleware('permission:show_user')->only(['show']);
+        $this->middleware('permission:delete_user')->only(['destroy']);
     }
 
 
@@ -35,8 +32,7 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $data = User::latest()->paginate(5);
-  
+        $data = User::whereJsonDoesntContain('roles_name', 'user')->latest()->paginate(5);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -75,7 +71,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles_name'));
     
         return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+        ->with('success','User created successfully');
     }
     
     /**
@@ -149,6 +145,6 @@ class UserController extends Controller
     {
         User::find($id)->delete();
         return redirect()->route('users.index')
-                        ->with('success','User deleted successfully');
+        ->with('success','User deleted successfully');
     }
 }

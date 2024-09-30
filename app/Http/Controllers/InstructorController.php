@@ -12,15 +12,15 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class InstructorController extends Controller
 {
-    public static function middleware():array
+
+    public function __construct()
     {
-        return [
-            new Middleware('permission:instructor', ['only' => ['index']]),
-            new Middleware('permission:create_instructor', ['only' => ['create','store']]),
-            new Middleware('permission:edit_instructor', ['only' => ['edit','update']]),
-            new Middleware('permission:delete_instructor', ['only' => ['destroy']]),
-        ];
+        $this->middleware('permission:instructor')->only(['index']);
+        $this->middleware('permission:create_instructor')->only(['create', 'store']);
+        $this->middleware('permission:edit_instructor')->only(['edit', 'update']);
+        $this->middleware('permission:delete_instructor')->only(['destroy']);
     }
+
 
     /**
      * Display a listing of the resource.

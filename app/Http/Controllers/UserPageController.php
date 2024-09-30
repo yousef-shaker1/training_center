@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 class UserPageController extends Controller
 {
+
+    
     public function home(){
         $sections = Section::get();
         $courses = Course::take(5)->get();

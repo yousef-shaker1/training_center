@@ -5,7 +5,6 @@
         <div class="comment-list" style="margin-bottom: 20px; padding: 15px; border: 1px solid #f3e9e9; border-radius: 8px; background-color: #f9f9f9;">
             <div class="single-comment justify-content-between d-flex">
                 <div class="user d-flex align-items-start">
-                    <!-- يمكنك إضافة صورة للمستخدم هنا -->
                     <div class="desc" style="margin-left: 15px;">
                         <h4 style="margin-bottom: 5px; font-size: 16px; font-weight: 600;">{{ $comment_blog->user->name }}</h4>
                         <p class="comment" style="font-size: 14px; color: #555;">

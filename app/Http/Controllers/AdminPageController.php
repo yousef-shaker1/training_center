@@ -12,17 +12,14 @@ use Illuminate\Routing\Controllers\Middleware;
 class AdminPageController extends Controller
 {
 
-    public static function middleware():array
+    public function __construct()
     {
-        return [
-            new Middleware('permission:Home', ['only' => ['index']]),
-            new Middleware('permission:section', ['only' => ['section_page']]),
-            new Middleware('permission:contact_us', ['only' => ['Contact_us_page']]),
-            new Middleware('permission:payment_page', ['only' => ['payment']]),
-            new Middleware('permission:payment_destroy', ['only' => ['delete_payment']]),
-        ];
+        $this->middleware('permission:Home')->only(['index']);
+        $this->middleware('permission:section')->only(['section_page']);
+        $this->middleware('permission:contact_us')->only(['Contact_us_page']);
+        $this->middleware('permission:payment_page')->only(['payment']);
+        $this->middleware('permission:payment_destroy')->only(['delete_payment']);
     }
-
 
     public function index(){
         return view('admin.index');
@@ -45,7 +42,7 @@ class AdminPageController extends Controller
     }
     
     public function payment_page(){
-        $payments = payment::paginate(7);
+        $payments = payment::with('course')->paginate(7);
         return view('admin.payment_page',compact('payments'));
     }
 

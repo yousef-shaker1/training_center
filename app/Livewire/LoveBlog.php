@@ -33,7 +33,7 @@ class LoveBlog extends Component
                 ->where('blog_id', $blogId)
                 ->delete();
         }
-    }
+    } 
 
     public function render()
     {

@@ -6,32 +6,31 @@ use Stripe\Stripe;
 use App\Models\Course;
 use App\Models\payment;
 use App\Models\Section;
+use App\CreatePaymentTrait;
 use Illuminate\Http\Request;
+
 use Stripe\Checkout\Session;
 use App\Http\Requests\save_course;
-
 use App\Http\Requests\update_course;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Routing\Controllers\Middleware;
 
 class CourseController extends Controller
 {
-    public static function middleware():array
+    use CreatePaymentTrait;
+    public function __construct()
     {
-        return [
-            new Middleware('permission:course', ['only' => ['index']]),
-            new Middleware('permission:create_course', ['only' => ['create','store']]),
-            new Middleware('permission:edit_course', ['only' => ['edit','update']]),
-            new Middleware('permission:delete_course', ['only' => ['destroy']]),
-        ];
+        $this->middleware('permission:course')->only(['index']);
+        $this->middleware('permission:create_course')->only(['create', 'store']);
+        $this->middleware('permission:edit_course')->only(['edit', 'update']);
+        $this->middleware('permission:delete_course')->only(['destroy']);
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $Courses = Course::paginate(5);
+        $Courses = Course::with('section')->paginate(5);
         $sections = Section::get();
         $payment = payment::get();
         return view('admin.course_page', compact('Courses','sections', 'payment'));
@@ -51,24 +50,16 @@ class CourseController extends Controller
     public function store(save_course $request)
     {
         $validatedData = $request->validated();
-        $path = $request->img->store('courses', 'public');
-        $data = [
-            'name' => $validatedData['name'],
-            'description' => $validatedData['description'],
-            'price' => $validatedData['price'],
-            'Numberofhours' => $validatedData['Numberofhours'],
-            'Quantity' => $validatedData['Quantity'],
-            'type' => $validatedData['type'],
-            'section_id' => $validatedData['section_id'],
-            'start_data' => $validatedData['start_data'],
-            'end_data' => $validatedData['end_data'],
-            'img' => $path,
-        ];
-    
-        Course::create($data);
-    
+
+        if (isset($validatedData['img'])) {
+            $validatedData['img'] = $request->img->store('courses', 'public');
+        }
+        
+        Course::create($validatedData);
+        
         session()->flash('message', 'Instructor created successfully.');
-            return redirect()->back();
+        return redirect()->back();
+
     }
 
     /**
@@ -126,32 +117,28 @@ class CourseController extends Controller
         $pay = payment::where('course_id', $id)->count();
     if($pay < $course->Quantity){
 
-            Stripe::setApiKey(config('services.stripe.secret'));
-            
-            $session = Session::create([
-                'line_items' => [
-                    [
-                        'price_data' => [
-                            'currency' => 'usd',
-                            'product_data' => [
-                                'name' => 'Send me money!!',
-                            ],
-                            'unit_amount' =>$course->price * 100,
+        Stripe::setApiKey(config('services.stripe.secret'));
+        
+        $session = Session::create([
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+                            'name' => 'Send me money!!',
                         ],
-                        'quantity' => 1,
+                        'unit_amount' =>$course->price * 100,
                     ],
+                    'quantity' => 1,
                 ],
-                'mode' => 'payment',
-                'success_url' => route('success'),
-            'cancel_url' => route('cancel'),
+            ],
+            'mode' => 'payment',
+            'success_url' => route('success'),
+        'cancel_url' => route('cancel'),
         ]);
 
-        payment::create([
-            'user_id' => Auth::user()->id,
-            'course_id' => $id,
-            'created_at' => now(),
-        ]);
-        
+        $this->createPayment($id);
+
         return redirect()->away($session->url);
         
     } else {
@@ -163,40 +150,8 @@ class CourseController extends Controller
 
     public function success()
     {
-        // try {
-        //     // جلب الطلب الأحدث من قاعدة البيانات
-        //     $course = Course::latest()->first();
-    
-        //     // تحقق إذا كان الطلب موجودًا
-        //     if (!$course) {
-        //         session()->flash('error', 'لم يتم العثور على الطلب.');
-        //         return redirect()->back();
-        //     }
-    
-        //     // توليد QR Code
-        //     $qrCode = new QrCode('Order ID: ' . $order->id);
-        //     $qrCode->setSize(150);
-        //     $writer = new PngWriter();
-        //     $result = $writer->write($qrCode);
-    
-        //     // الحصول على محتوى الصورة كـ Base64
-        //     $qrCodeImage = base64_encode($result->getString());
-    
-        //     // إعداد اسم الملف للفاتورة
-        //     $filename = 'invoice_' . $order->id . '.pdf';
-    
-        //     // تحميل العرض
-        //     $pdf = Pdf::loadView('invoice', compact('order', 'qrCodeImage'));
-        //     return $pdf->download($filename);
-    
-        // } catch (\Exception $e) {
-        //     // إذا حدث خطأ، سيتم تسجيله ويمكنك عرض رسالة خطأ مناسبة
-        //     Log::error('Error generating invoice: ' . $e->getMessage());
-        //     session()->flash('error', 'حدث خطأ أثناء توليد الفاتورة.');
-        //     return redirect()->back();
-        // }
-            session()->flash('message', 'تم حجز اشتراك الكورس .');
-            return redirect()->back();
+        session()->flash('message', 'تم حجز اشتراك الكورس .');
+        return redirect()->back();
     }
     public function cancel()
     {
@@ -206,7 +161,7 @@ class CourseController extends Controller
 
     public function single_section($id){
         $section = Section::find($id);
-        $courses = Course::where('section_id', $id)->get();
+        $courses = Course::with('section')->where('section_id', $id)->get();
         return view('user_page.single_section', compact('courses', 'section'));
     }
 }
