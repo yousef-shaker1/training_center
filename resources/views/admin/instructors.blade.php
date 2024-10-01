@@ -75,7 +75,7 @@ instructors
                                             data-img="{{ $instructor->img }}" data-name="{{ $instructor->name }}"
                                             data-description="{{ $instructor->description }}"
                                             data-year_experience="{{ $instructor->year_experience }}"
-                                            data-section_id="{{ $instructor->section_id }}"
+                                            data-section_id="{{ $instructor->section->id }}"
                                             data-toggle="modal" href="#exampleModal2" title="تعديل">تعديل
                                             <i class="las la-pen"></i>
                                             </a>
@@ -220,14 +220,14 @@ instructors
                                 <label for="section_id">القسم</label>
                                 <select name="section_id" id="section_id" class="form-control" required>
                                     @foreach ($sections as $section)
-                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('section_id')<div class="text-danger">{{ $message }}</div>@enderror
                             
                             @error('section_id')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
-                        <label for="current_img" class="col-form-label">الصورة الحالية للقسم:</label>
+                        <label for="current_img" class="col-form-label">الصورة الحالية للمدرب:</label>
                         <br>
                         <a id="current_img_link" href="#" target="_blank">
                             <img id="current_img" src="#" style="width: 80px; height: 50px;" alt="الصورة الحالية">
@@ -296,11 +296,13 @@ instructors
     var year_experience = $(this).data('year_experience');
     var section_id = $(this).data('section_id');
 
+
     $('#exampleModal2 #id').val(id);
     $('#exampleModal2 #name').val(name);
     $('#exampleModal2 #description').val(description);
     $('#exampleModal2 #year_experience').val(year_experience);
     $('#exampleModal2 #section_id').val(section_id);
+
     
     $('#current_img').attr('src', img); 
     if (img) {
@@ -312,6 +314,7 @@ instructors
         $('#current_img_link').attr('href', '#'); 
     }
 });
+
 
 $(document).ready(function() {
     $('#modaldemo9').on('show.bs.modal', function(event) {
