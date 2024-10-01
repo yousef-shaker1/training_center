@@ -62,7 +62,7 @@ courses
                                 <?php $i = 1; ?>
                                 @foreach ($Courses as $course)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $Courses->firstItem() + $loop->index }}</td>
                                         <td>
                                             <a href="{{ Storage::url($course->img) }}">
                                                 <img src="{{ Storage::url($course->img) }}" class="img-thumbnail" style="width: 100px; "> <!-- تصغير الصورة -->

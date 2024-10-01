@@ -44,14 +44,12 @@
     </div>
 
 
-
-    <!-- Update Student Modal -->
     <div wire:ignore.self class="modal fade" id="updateBlogModal" tabindex="-1"
         aria-labelledby="updateBlogModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateBlogModalLabel">Edit Section</h5>
+                    <h5 class="modal-title" id="updateBlogModalLabel">Edit blog</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal">&times;</button>
                 </div>
@@ -73,14 +71,14 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="current_img" class="col-form-label">الصورة الحالية للقسم:</label>
+                            <label for="current_img" class="col-form-label">image blog :</label>
                             <br>
                             <a id="current_img_link" href="{{ Storage::url($img) }}"><img id="" src="{{ Storage::url($img) }}"
                                     style="width: 80px; height: 50px;"></a>
                             <br>
                         </div>
                         <div class="mb-3">
-                            <label>صورة القسم</label>
+                            <label>image</label>
                             <input type="file" wire:model.live="img" class="form-control">
                             @error('img') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
@@ -95,7 +93,6 @@
         </div>
     </div>
 
-    <!-- Delete Student Modal -->
     <div wire:ignore.self class="modal fade" id="deleteBlogModal" tabindex="-1"
         aria-labelledby="deleteBlogModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -108,7 +105,7 @@
                 <form wire:submit.prevent="destroyBlog">
                     @csrf
                     <div class="modal-body">
-                        <h4>Are you sure you want to delete this data ?</h4>
+                        <h4>Are you sure you want to delete this blog ?</h4>
                         <label>Blog title</label>
                         <input type="text" wire:model.lazy="title" class="form-control" readonly>
                     </div>

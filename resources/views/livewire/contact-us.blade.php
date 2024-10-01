@@ -25,10 +25,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1;?>
                                     @foreach ($Contact_us as $Contact)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $Contact_us->firstItem() + $loop->index }}</td>
                                             <td>{{ $Contact->name }}</td>
                                             <td>{{ $Contact->email }}</td>
                                             <td>{{ $Contact->message }}</td>

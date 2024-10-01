@@ -38,7 +38,7 @@ payments
                                 <?php $i = 1; ?>
                                 @foreach ($payments as $payment)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $payments->firstItem() + $loop->index }}</td>
                                         <td>{{ $payment->user->name }}</td>
                                         <td>{{ $payment->course->name }}</td>
                                         <td>{{ $payment->course->price }}$</td>
@@ -50,7 +50,7 @@ payments
                                             data-toggle="modal" href="#modaldemo9" title="حذف">حذف
                                              <i class="las la-trash"></i>
                                          </a>
-                                         @endcan
+                                        @endcan
                                         </td>
                                     </tr>
                                 @endforeach

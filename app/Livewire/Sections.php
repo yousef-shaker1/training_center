@@ -10,10 +10,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class Sections extends Component
-{
+{ 
     use WithPagination, WithFileUploads;
     protected $paginationTheme = 'bootstrap';
-    public $id;
+    public $id; 
     public $name;
     public $img;
     
@@ -34,7 +34,7 @@ class Sections extends Component
     protected function updateRules()
     {
         return [
-            'name' => 'nullable|min:2|max:50',
+            'name' => 'required|min:2|max:50',
             'img' => 'nullable',
         ];
     }
@@ -43,6 +43,7 @@ class Sections extends Component
     {
         return $this->validateOnly($fields);
     }
+
 
     public function editSection(int $id)
     {
@@ -85,14 +86,11 @@ class Sections extends Component
     {
         $validator = $this->validate($this->updateRules());
         $section = section::find($this->id);
-        // Check if a new image is provided
         if ($this->img instanceof UploadedFile) {
-            // Delete the old image if it exists
             if (!empty($section->img) && Storage::disk('public')->exists($section->img)) {
                 Storage::disk('public')->delete($section->img);
             }
     
-            // Store the new image
             $path = $this->img->store('section', 'public');
             $section->img = $path;
         }

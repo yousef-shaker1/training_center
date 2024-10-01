@@ -37,34 +37,40 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/edit/section/{id}', [SectionController::class, 'edit']);
     Route::delete('/delete/section/{id}', [SectionController::class, 'delete']);
     
+    //payment
     Route::get('/payments', [PaymentController::class, 'payment_all']);
     Route::post('/create/payment', [PaymentController::class, 'create']);
     Route::delete('/delete/payment/{id}', [PaymentController::class, 'delete']);
     
+    //love blog
     Route::get('/create/love_blog/{id}', [BlogController::class, 'create_love']);
     Route::delete('/delete/love_blog/{id}', [BlogController::class, 'delete_love']);
 
+    //blog
     Route::get('/blogs', [BlogController::class, 'index']);
     Route::get('/blog/{id}', [BlogController::class, 'show_blog']);
     Route::post('/create/blog', [blogController::class, 'create']);
     Route::post('/edit/blog/{id}', [blogController::class, 'edit']);
     Route::delete('/delete/blog/{id}', [blogController::class, 'delete']);
     
+    //comment blog
     Route::get('/comment_blogs/{id}', [BlogController::class, 'comment_blogs']);
     Route::post('/create/comment/{id}', [BlogController::class, 'create_comment']);
     Route::delete('/delete/comment_blog/{id}', [blogController::class, 'delete_comment_blog']);
     
+    //Contact_us
     Route::get('/messages', [Customer_messagesController::class, 'index']);
     Route::post('/create/message', [Customer_messagesController::class, 'create_message']);
     Route::delete('/delete/message/{id}', [Customer_messagesController::class, 'delete']);
 
+    //instructors
     Route::get('/instructors', [InstructorController::class, 'instructor_all']);
     Route::get('/instructor/{id}', [InstructorController::class, 'show_instructor']);
     Route::post('/create/instructor', [InstructorController::class, 'create']);
     Route::post('/edit/instructor/{id}', [InstructorController::class, 'edit']);
     Route::delete('/delete/instructor/{id}', [InstructorController::class, 'delete']);
 
-
+    //courses
     Route::get('/courses', [CourseController::class, 'course_all']);
     Route::get('/course/{id}', [CourseController::class, 'show_course']);
     Route::post('/create/course', [CourseController::class, 'create']);
