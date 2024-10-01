@@ -22,7 +22,16 @@ class AdminPageController extends Controller
     }
 
     public function index(){
-        return view('admin.index');
+        $courseSalesData = Payment::selectRaw('DATE(created_at) as date, COUNT(course_id) as total_sales')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        $labels = $courseSalesData->pluck('date')->toArray(); // تواريخ المدفوعات
+        $salesData = $courseSalesData->pluck('total_sales')->toArray(); // عدد المدفوعات اليومية
+
+        return view('admin.index', compact('labels', 'salesData'));
+        
     }
 
     public function section_page(){
