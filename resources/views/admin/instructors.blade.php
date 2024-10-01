@@ -57,12 +57,12 @@ instructors
                                 <?php $i = 1;?>
                                 @foreach ($Instructors as $instructor)
                                     <tr>
-                                        <td>{{ $Instructors->firstItem() + $loop->index }}</td>
+                                        <td>{{ $i++ }}</td>
                                         <td>
                                             <a href="{{ Storage::url($instructor->img) }}">
                                                 <img src="{{ Storage::url($instructor->img) }}" class="img-thumbnail" style="width: 80px; height: 50px;">
                                             </a>
-                                        </td> 
+                                        </td>
                                         <td>{{ $instructor->name }}</td>
                                         <td>{{ $instructor->year_experience }} year</td>
                                         <td>{{ $instructor->section->name }}</td>
@@ -132,7 +132,7 @@ instructors
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">اضافة مدرب</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">اضافة قسم</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
@@ -227,7 +227,7 @@ instructors
                             
                             @error('section_id')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
-                        <label for="current_img" class="col-form-label">الصورة الحالية للمدرب:</label>
+                        <label for="current_img" class="col-form-label">الصورة الحالية للقسم:</label>
                         <br>
                         <a id="current_img_link" href="#" target="_blank">
                                     <img id="current_img" src="#" style="width: 80px; height: 50px;" alt="الصورة الحالية">
@@ -254,7 +254,7 @@ instructors
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
-                <h6 class="modal-title">حذف المدرب</h6>
+                <h6 class="modal-title">حذف القسم</h6>
                 <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                     <span aria-hidden="true">&times;</span>
                 </button>
