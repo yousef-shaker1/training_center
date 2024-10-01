@@ -220,7 +220,7 @@ instructors
                                 <label for="section_id">القسم</label>
                                 <select name="section_id" id="section_id" class="form-control" required>
                                     @foreach ($sections as $section)
-                                        <option value="{{ $section->id }}"  {{ $section->id == $instructor->section_id ? 'selected' : '' }}>{{ $section->name }}</option>
+                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('section_id')<div class="text-danger">{{ $message }}</div>@enderror
@@ -230,13 +230,13 @@ instructors
                         <label for="current_img" class="col-form-label">الصورة الحالية للقسم:</label>
                         <br>
                         <a id="current_img_link" href="#" target="_blank">
-                                    <img id="current_img" src="#" style="width: 80px; height: 50px;" alt="الصورة الحالية">
-                                </a>
-                                <br>
-                                <div class="form-group">
-                                    <label for="img">صورة المدرب الجديدة</label>
-                                    <input type="file" class="form-control" id="img" name="img">
-                                    @error('img')<div class="text-danger">{{ $message }}</div>@enderror
+                            <img id="current_img" src="#" style="width: 80px; height: 50px;" alt="الصورة الحالية">
+                            </a>
+                            <br>
+                            <div class="form-group">
+                            <label for="img">صورة المدرب الجديدة</label>
+                            <input type="file" class="form-control" id="img" name="img">
+                            @error('img')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         
                     </form>
