@@ -90,15 +90,15 @@ index
   var courseSalesChart = new Chart(ctxCourseSales, {
       type: 'line',
       data: {
-          labels: @json($labels), // تواريخ مبيعات الكورسات
+          labels: @json($labels),
           datasets: [{
               label: 'Course Sales',
-              data: @json($salesData), // بيانات مبيعات الكورسات
+              data: @json($salesData),
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 2,
               fill: true,
-              tension: 0.4, // لجعل الرسم أكثر سلاسة
+              tension: 0.4,
               pointRadius: 3,
               pointHoverRadius: 5
           }]

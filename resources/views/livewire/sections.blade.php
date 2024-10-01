@@ -17,7 +17,7 @@
                             <h5 class="mb-0">Section Management</h5>
                             @can('create_section')
                             <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addSectionModal">
-                                Add New Section
+                                Add New Section 
                             </button>
                             @endcan
                         </div>
@@ -35,9 +35,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sections as $index => $section)
+                                    @foreach ($sections as $section)
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $sections->firstItem() + $loop->index }}</td>
                                             <td>
                                                 <a href="{{ Storage::url($section->img) }}">
                                                     <img src="{{ Storage::url($section->img) }}" class="img-thumbnail" style="width: 80px; height: 50px;">

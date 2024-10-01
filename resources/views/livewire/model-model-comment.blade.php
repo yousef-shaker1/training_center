@@ -5,13 +5,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteCommentModalLabel">Delete Student</h5>
+                    <h5 class="modal-title" id="deleteCommentModalLabel">Delete Comment</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
                     wire:click="closeModal">&times;</button>
                 </div>
                 <form wire:submit.prevent="destroyComment_Blog">
                     <div class="modal-body">
-                        <h4>Are you sure you want to delete this data ?</h4>
+                        <h4>Are you sure you want to delete this Comment ?</h4>
                         <label>التعليق</label>
                         <input type="text" wire:model.lazy="comment" class="form-control" readonly>
                     </div>
