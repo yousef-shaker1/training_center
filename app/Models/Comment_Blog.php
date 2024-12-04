@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Comment_Blog extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $fillable = ['user_id', 'blog_id', 'comment'];
     public $timestamps = true;
     protected $table = 'comment_blogs';
 
